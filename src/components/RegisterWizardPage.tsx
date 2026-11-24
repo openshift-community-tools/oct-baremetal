@@ -61,6 +61,7 @@ import CommunityDisclaimer from './CommunityDisclaimer';
 import dashboardLogger from '../utils/logger';
 
 import './baremetal-nodes.css';
+import { csrfHeaders } from '../utils/csrf';
 
 // Path segment `oct-baremetal` is consolePlugin.name — do not rename.
 const DISCOVERY_SERVICE_URL = '/api/proxy/plugin/oct-baremetal/discovery-service';
@@ -128,7 +129,7 @@ const RegisterWizardPage: FC = () => {
     try {
       const response = await fetch(`${DISCOVERY_SERVICE_URL}/api/v1/discover`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...csrfHeaders() },
         body: JSON.stringify({
           bmcAddress,
           username: bmcUsername,
